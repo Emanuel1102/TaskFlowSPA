@@ -4,6 +4,8 @@ TaskFlowSPA es una aplicacion web tipo SPA (Single Page Application) construida 
 
 La aplicacion usara routing del lado del cliente con History API para navegar entre vistas sin recargar toda la pagina, integrando autenticacion, autorizacion por roles, proteccion de rutas, renderizado dinamico y persistencia de datos con un backend fake basado en `json-server`.
 
+Para simplificar la autenticacion en esta primera SPA, la sesion activa del usuario se manejara con `localStorage`, mientras que `json-server` se utilizara para los datos persistentes del sistema.
+
 ## Objetivo del proyecto
 
 Este proyecto esta pensado para practicar fundamentos clave del desarrollo frontend moderno:
@@ -51,6 +53,8 @@ Esta decision busca que el equipo entienda primero como funciona una SPA antes d
 - Renderizado dinamico de vistas.
 - Componentes reutilizables.
 - CRUD completo de tareas.
+- Edicion de perfil del usuario autenticado.
+- Eliminacion de la propia cuenta por parte del usuario autenticado.
 - Dashboard principal con estadisticas basicas.
 - Panel administrativo para usuarios `ADMIN`.
 - Consumo de datos desde un backend fake con `json-server`.
@@ -68,6 +72,8 @@ Esta decision busca que el equipo entienda primero como funciona una SPA antes d
 
 - Puede crear, editar y eliminar sus propias tareas.
 - Puede visualizar solo la informacion relacionada con su cuenta.
+- Puede editar su propio perfil.
+- Puede eliminar su propia cuenta.
 
 ## Alcance funcional esperado
 
@@ -76,6 +82,7 @@ La SPA deberia incluir, como minimo, los siguientes modulos o vistas:
 - `Login`
 - `Dashboard`
 - `Mis tareas`
+- `Mi perfil`
 - `Detalle o formulario de tarea`
 - `Administracion de usuarios` solo para `ADMIN`
 - `Pagina 404`
@@ -108,16 +115,20 @@ src/
 
 1. El usuario entra a la aplicacion.
 2. Si no tiene sesion activa, ve la vista de `login`.
-3. Tras autenticarse, el router redirige segun su estado de sesion y permisos.
-4. Las rutas privadas validan autenticacion antes de renderizar.
-5. Las rutas administrativas validan autenticacion y rol `ADMIN`.
+3. Tras autenticarse, la sesion se guarda en `localStorage`.
+4. El router redirige segun su estado de sesion y permisos.
+5. Al recargar la app, la sesion se restaura desde `localStorage`.
+6. Las rutas administrativas validan autenticacion y rol `ADMIN`.
+7. Al cerrar sesion, los datos de sesion se eliminan del `localStorage`.
 
 ## Reglas de negocio base
 
 - Un `USER` solo puede manipular sus propias tareas.
+- Un `USER` solo puede editar su propio perfil.
+- Un `USER` puede eliminar su propia cuenta.
 - Un `ADMIN` puede ver y administrar todas las tareas y usuarios.
 - Las rutas privadas no deben renderizarse si no existe una sesion valida.
-- El estado de autenticacion debe persistirse de forma controlada en el navegador.
+- El estado de autenticacion debe persistirse de forma controlada en `localStorage`.
 
 ## Scripts disponibles
 
@@ -143,19 +154,30 @@ npm run dev
 
 ## Backend fake
 
-La persistencia de datos estara basada en `json-server`. La idea es simular recursos como:
+La persistencia de datos del sistema estara basada en `json-server`. La idea es simular recursos como:
 
 - `users`
 - `tasks`
-- `sessions` o estado equivalente si se requiere para pruebas
 
 Ejemplo de responsabilidades del backend fake:
 
 - Consultar usuarios.
 - Validar credenciales de manera simulada.
+- Consultar y actualizar perfil del usuario autenticado.
+- Eliminar la cuenta del usuario autenticado.
 - Obtener tareas por usuario.
 - Crear, editar y eliminar tareas.
 - Permitir consultas globales para administracion.
+
+## Manejo de sesion
+
+Para mantener el proyecto simple y enfocado en el aprendizaje:
+
+- `json-server` se usara para `users` y `tasks`.
+- `localStorage` se usara para guardar la sesion activa.
+- No se manejara una coleccion `sessions` en el backend fake como parte del flujo principal.
+
+Esto permite practicar autenticacion SPA sin agregar complejidad innecesaria en esta primera etapa.
 
 ## Criterios tecnicos del proyecto
 

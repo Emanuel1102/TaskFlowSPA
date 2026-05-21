@@ -50,8 +50,10 @@ La prioridad no es aplicar una estructura compleja, sino ayudar a que el estudia
 ### Autenticacion
 
 - Login y logout.
-- Persistencia de sesion.
-- Restauracion de sesion al recargar.
+- Persistencia de sesion con `localStorage`.
+- Restauracion de sesion al recargar desde `localStorage`.
+- Edicion del perfil del usuario autenticado.
+- Eliminacion de la propia cuenta.
 
 ### Routing
 
@@ -87,6 +89,8 @@ La prioridad no es aplicar una estructura compleja, sino ayudar a que el estudia
 
 - Gestiona solo sus tareas.
 - Ve solo informacion propia.
+- Edita su propio perfil.
+- Puede eliminar su propia cuenta.
 
 ## Convenciones sugeridas de estructura
 
@@ -122,8 +126,11 @@ src/
 ## Datos y persistencia
 
 - El backend fake sera la fuente principal de datos persistentes.
-- La sesion puede persistirse localmente para simulacion, pero su manejo debe ser encapsulado.
+- `json-server` debe manejar principalmente recursos como `users` y `tasks`.
+- La sesion activa debe persistirse en `localStorage` para simplificar la autenticacion de esta primera SPA.
+- El manejo de `localStorage` debe estar encapsulado en utilidades o servicios.
 - No asumir permisos solo por ocultar botones; validar acceso tambien en guards y acciones.
+- Las acciones sobre perfil deben limitarse al propio usuario, salvo privilegios administrativos explicitos.
 
 ## Calidad esperada
 
