@@ -1,3 +1,5 @@
+import { router } from "../../router/router";
+
 export const register = () => {
     return `
         <main class="grid min-h-screen lg:grid-cols-[0.95fr_1.05fr]">
@@ -20,7 +22,7 @@ export const register = () => {
                             <p class="text-sm font-semibold uppercase tracking-[0.3em] text-blue-600">Registro</p>
                             <h2 class="mt-2 text-3xl font-black text-slate-900">Crear cuenta</h2>
                         </div>
-                        <a class="rounded-full border border-blue-200 px-4 py-2 text-sm font-semibold text-blue-700 hover:bg-blue-50" href="/src/views/login.html">Ya tengo cuenta</a>
+                        <a class="navigation rounded-full border border-blue-200 px-4 py-2 text-sm font-semibold text-blue-700 hover:bg-blue-50" href="/login">Ya tengo cuenta</a>
                     </div>
 
                     <form class="mt-8 grid gap-5">
@@ -54,12 +56,24 @@ export const register = () => {
                             </div>
                         </div>
 
-                        <a class="inline-flex items-center justify-center rounded-2xl bg-blue-600 px-5 py-3 text-sm font-bold text-white hover:bg-blue-500" href="/src/views/login.html">
+                        <button class="inline-flex items-center justify-center rounded-2xl bg-blue-600 px-5 py-3 text-sm font-bold text-white hover:bg-blue-500">
                         Registrarme
-                        </a>
+                        </button>
                     </form>
                 </div>
             </section>
         </main>
     `
+}
+
+
+export const listenersRegister = () => {
+    const navigationLinks = document.querySelectorAll('.navigation');
+    navigationLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const path = link.getAttribute('href');
+            router(path)
+        })
+    })
 }
