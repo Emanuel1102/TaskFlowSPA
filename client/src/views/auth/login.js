@@ -1,4 +1,5 @@
 import { router } from "../../router/router";
+import { verifyUser } from "../../services/users.service";
 
 export const login = () => {
     return `
@@ -19,11 +20,11 @@ export const login = () => {
                     <form id="login-form" class="mt-8 grid gap-5">
                         <div>
                             <label class="mb-2 block text-sm font-medium text-slate-700" for="email">Correo</label>
-                            <input id="email" type="email" placeholder="usuario@taskflow.com" class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none" />
+                            <input name="email" type="email" placeholder="usuario@taskflow.com" class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none" />
                         </div>
                         <div>
                             <label class="mb-2 block text-sm font-medium text-slate-700" for="password">Contrasena</label>
-                            <input id="password" type="password" placeholder="Ingresa tu contrasena" class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none" />
+                            <input name="password" type="password" placeholder="Ingresa tu contrasena" class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none" />
                         </div>
                         <button class="inline-flex items-center justify-center rounded-2xl bg-blue-600 px-5 py-3 text-sm font-bold text-white hover:bg-blue-500">
                             Entrar al dashboard
@@ -49,8 +50,19 @@ export const login = () => {
 
 export const listenersLogin = () => {
     const loginForm = document.getElementById('login-form');
-    loginForm.addEventListener('submit', (e) => {
+    loginForm.addEventListener('submit', async (e)  => {
         e.preventDefault();
-        router('/dashboard');
+
+        const email = loginForm.email.value
+        const password = loginForm.password.value        
+        
+        const userExists = await verifyUser(email, password)
+
+        if (userExists) {
+            router('/dashboard')
+            
+        }else{
+            alert('el usuario no existe')
+        }
     })
 }

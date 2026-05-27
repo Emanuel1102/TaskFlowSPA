@@ -1,0 +1,25 @@
+const userEndpoint =  'http://localhost:3000/users'
+
+export const createUser = async (user) =>{
+    await fetch(userEndpoint, {
+        method: 'POST',
+        headers: {
+            'content-type' : 'aplcation/json'
+        },
+        body: JSON.stringify(user)
+    })
+    
+
+}
+
+export const verifyUser = async (email, password=null) => {
+
+    const url = password ? `${userEndpoint}?email=${email}&password=${password}` : `${userEndpoint}?email=${email}`
+
+    const response = await fetch(url)
+    
+    const [ user ] = await response.json()
+
+    return user
+    
+}

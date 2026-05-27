@@ -1,0 +1,30 @@
+{
+  "users": [
+    {
+      "name": "emanuel",
+      "lastname": "manotas",
+      "email": "emanuelmanotas@gmail.com",
+      "password": "emanuel1234",
+      "role": "ADMIN",
+      "id": "fDqgBhaTJ1Y"
+    },
+    {
+      "name": "david",
+      "lastname": "oviedo",
+      "email": "david@gmail.com",
+      "password": "david1234",
+      "role": "USER",
+      "id": "tG06vU8yTBA"
+    },
+    {
+      "name": "",
+      "lastname": "",
+      "email": "",
+      "password": "",
+      "role": "USER",
+      "id": "TdYmjLNLorw"
+    }
+  ],
+  "tasks": [],
+  "$schema": "./node_modules/json-server/schema.json"
+}
