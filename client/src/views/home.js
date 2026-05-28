@@ -28,29 +28,28 @@ export function home () {
                         luego en una SPA real con autenticacion, roles, permisos y CRUD de tareas.
                     </p>
                     <div class="mt-8 flex flex-col gap-3 sm:flex-row">
-                        <a class="inline-flex items-center justify-center rounded-2xl bg-blue-600 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-blue-200 hover:bg-blue-500"
-                        href="/src/views/login.html">Iniciar sesion</a>
-                        <a class="inline-flex items-center justify-center rounded-2xl border border-blue-200 bg-white px-6 py-3 text-sm font-bold text-blue-700 hover:bg-blue-50"
-                        href="/src/views/register.html">Crear cuenta</a>
+                        <a class="navigation inline-flex items-center justify-center rounded-2xl bg-blue-600 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-blue-200 hover:bg-blue-500" href="/login">Iniciar sesion</a>
+                        <a class="navigation inline-flex items-center justify-center rounded-2xl border border-blue-200 bg-white px-6 py-3 text-sm font-bold text-blue-700 hover:bg-blue-50"
+                        href="/register">Crear cuenta</a>
                     </div>
                 </div>
 
                 <section class="rounded-[2rem] border border-blue-100 bg-white p-8 shadow-xl shadow-blue-100/70">
                     <h2 class="text-2xl font-bold text-slate-900">Vistas del proyecto</h2>
                     <div class="mt-6 grid gap-4 sm:grid-cols-2">
-                        <a class="rounded-3xl bg-sky-50 p-5 hover:bg-sky-100" href="/src/views/dashboard.html">
+                        <a class="navigation rounded-3xl bg-sky-50 p-5 hover:bg-sky-100" href="/dashboard">
                             <p class="text-sm font-semibold text-blue-600">Dashboard</p>
                             <p class="mt-2 text-sm text-slate-600">Resumen principal de productividad.</p>
                         </a>
-                        <a class="rounded-3xl bg-sky-50 p-5 hover:bg-sky-100" href="/src/views/tasks.html">
+                        <a class="navigation rounded-3xl bg-sky-50 p-5 hover:bg-sky-100" href="/tasks">
                             <p class="text-sm font-semibold text-blue-600">Mis tareas</p>
                             <p class="mt-2 text-sm text-slate-600">CRUD principal del usuario.</p>
                         </a>
-                        <a class="rounded-3xl bg-sky-50 p-5 hover:bg-sky-100" href="/src/views/profile.html">
+                        <a class="navigation rounded-3xl bg-sky-50 p-5 hover:bg-sky-100" href="/profile">
                             <p class="text-sm font-semibold text-blue-600">Mi perfil</p>
                             <p class="mt-2 text-sm text-slate-600">Actualizar cuenta y datos personales.</p>
                         </a>
-                        <a class="rounded-3xl bg-sky-50 p-5 hover:bg-sky-100" href="/src/views/admin.html">
+                        <a class="navigation rounded-3xl bg-sky-50 p-5 hover:bg-sky-100" href="/admin">
                             <p class="text-sm font-semibold text-blue-600">Admin</p>
                             <p class="mt-2 text-sm text-slate-600">Gestion de usuarios y roles.</p>
                         </a>

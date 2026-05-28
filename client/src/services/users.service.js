@@ -8,18 +8,21 @@ export const createUser = async (user) =>{
         },
         body: JSON.stringify(user)
     })
-    
-
 }
 
 export const verifyUser = async (email, password=null) => {
-
-    const url = password ? `${userEndpoint}?email=${email}&password=${password}` : `${userEndpoint}?email=${email}`
-
+    const url = password ? `${userEndpoint}?email=${email}&password=${password}` : `${userEndpoint}?email=${email}`    
     const response = await fetch(url)
-    
     const [ user ] = await response.json()
-
     return user
-    
+}
+
+export const updateUser = async (id, user) => {
+    await fetch(`${userEndpoint}/${id}`, {
+        method: 'PATCH',
+        headers: {
+            'content-type' : 'aplcation/json'
+        },
+        body: JSON.stringify(user)
+    })
 }

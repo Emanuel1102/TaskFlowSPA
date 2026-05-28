@@ -6,7 +6,7 @@ import { notFound } from "../views/auth/notFound";
 import { taskForm } from "../views/tasks/taskForm";
 import { tasks } from "../views/tasks/tasks";
 import { admin } from "../views/user/admin";
-import { profile } from "../views/user/profile";
+import { listenersProfile, profile } from "../views/user/profile";
 
 export const routes = {
     // auth routes
@@ -42,7 +42,7 @@ export const routes = {
     },
     "/profile": {
         template: profile(),
-        actions: () => {}
+        actions: listenersProfile
     },
     
     // not found view

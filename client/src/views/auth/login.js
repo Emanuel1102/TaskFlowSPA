@@ -1,4 +1,5 @@
 import { router } from "../../router/router";
+import { saveSession } from "../../services/auth.services";
 import { verifyUser } from "../../services/users.service";
 
 export const login = () => {
@@ -17,14 +18,18 @@ export const login = () => {
                         <p class="mt-4 text-slate-600">Ingresa a tu espacio de trabajo y continua organizando tus tareas.</p>
                     </div>
 
-                    <form id="login-form" class="mt-8 grid gap-5">
+                    <form id="login-form" class="mt-8 grid gap-4">
                         <div>
                             <label class="mb-2 block text-sm font-medium text-slate-700" for="email">Correo</label>
-                            <input name="email" type="email" placeholder="usuario@taskflow.com" class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none" />
+                            <input required name="email" id="email" type="email" placeholder="usuario@taskflow.com" class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none" />
                         </div>
                         <div>
                             <label class="mb-2 block text-sm font-medium text-slate-700" for="password">Contrasena</label>
-                            <input name="password" type="password" placeholder="Ingresa tu contrasena" class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none" />
+                            <input name="password" id="password" type="password" placeholder="Ingresa tu contrasena" class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none" />
+                        </div>
+                        <div class="flex items-center gap-2 px-2 mb-2">
+                            <input name="show-password" id="show-password" type="checkbox" class="cursor-pointer rounded-2xl bg-blue-50 px-4 py-3 text-slate-900 " />
+                            <label class="cursor-pointer text-sm font-medium text-slate-700" for="show-password">Mostrar Contrasena</label>
                         </div>
                         <button class="inline-flex items-center justify-center rounded-2xl bg-blue-600 px-5 py-3 text-sm font-bold text-white hover:bg-blue-500">
                             Entrar al dashboard
@@ -50,19 +55,30 @@ export const login = () => {
 
 export const listenersLogin = () => {
     const loginForm = document.getElementById('login-form');
+    const email = loginForm.email
+    const password = loginForm.password
+    
     loginForm.addEventListener('submit', async (e)  => {
-        e.preventDefault();
+        e.preventDefault();        
 
-        const email = loginForm.email.value
-        const password = loginForm.password.value        
+        const userExists = await verifyUser(email.value, password.value)
         
-        const userExists = await verifyUser(email, password)
-
         if (userExists) {
+            saveSession(userExists)
             router('/dashboard')
             
         }else{
-            alert('el usuario no existe')
+            alert('Usuario o contraseña inválida')
         }
+    })
+
+    const showPassword = loginForm['show-password'];
+
+    showPassword.addEventListener('change', () => {
+        if (showPassword.checked) {
+            password.type = 'text';
+        } else {
+            password.type = 'password';
+        }   
     })
 }

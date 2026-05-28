@@ -1,28 +1,28 @@
 {
   "users": [
     {
-      "name": "emanuel",
-      "lastname": "manotas",
-      "email": "emanuelmanotas@gmail.com",
-      "password": "emanuel1234",
+      "name": "Emanuel David",
+      "lastname": "Manotas Oviedo",
+      "email": "emanuelmanotas2002@gmail.com",
+      "password": "contrasena",
       "role": "ADMIN",
       "id": "fDqgBhaTJ1Y"
     },
     {
-      "name": "david",
-      "lastname": "oviedo",
-      "email": "david@gmail.com",
+      "name": "David",
+      "lastname": "Oviedo",
+      "email": "davidoviedo@gmail.com",
       "password": "david1234",
       "role": "USER",
       "id": "tG06vU8yTBA"
     },
     {
-      "name": "",
-      "lastname": "",
-      "email": "",
-      "password": "",
+      "name": "david",
+      "lastname": "manotas",
+      "email": "emanuel@gmail.com",
+      "password": "emanueldavid",
       "role": "USER",
-      "id": "TdYmjLNLorw"
+      "id": "18_ypQrFLvI"
     }
   ],
   "tasks": [],

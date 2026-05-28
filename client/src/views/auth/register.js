@@ -30,36 +30,48 @@ export const register = () => {
                         <div class="grid gap-5 md:grid-cols-2">
                             <div>
                                 <label class="mb-2 block text-sm font-medium text-slate-700" for="register-name">Nombre</label>
-                                <input name="register-name" type="text" placeholder="Ana" class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none" />
+                                <input required name="register-name" type="text" placeholder="Ana" class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none" />
                             </div>
                             <div>
                                 <label class="mb-2 block text-sm font-medium text-slate-700" for="register-lastname">Apellido</label>
-                                <input name="register-lastname" type="text" placeholder="Torres" class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none" />
+                                <input required name="register-lastname" type="text" placeholder="Torres" class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none" />
                             </div>
                         </div>
 
                         <div>
                             <label class="mb-2 block text-sm font-medium text-slate-700" for="register-email">Correo</label>
-                            <input name="register-email" type="email" placeholder="usuario@taskflow.com" class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none" />
+                            <input required name="register-email" type="email" placeholder="usuario@taskflow.com" class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none" />
                         </div>
 
                         <div class="grid gap-5 md:grid-cols-2">
                             <div>
-                                <label class="mb-2 block text-sm font-medium text-slate-700" for="register-password">Contrasena</label>
-                                <input name="register-password" type="password" placeholder="Crea una contrasena" class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none" />
+                                <div>
+                                    <label class="mb-2 block text-sm font-medium text-slate-700" for="register-password">Contrasena</label>
+                                    <input required name="register-password" type="password" placeholder="Crea una contrasena" class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none" />
+                                </div>
+                                <div class="flex items-center gap-2 px-2 my-2">
+                                    <input name="show-password" id="show-password" type="checkbox" class="cursor-pointer rounded-2xl bg-blue-50 px-4 py-3 text-slate-900 " />
+                                    <label class="cursor-pointer text-sm font-medium text-slate-700" for="show-password">Mostrar Contrasena</label>
+                                </div>
                             </div>
                             <div>
                                 <label class="mb-2 block text-sm font-medium text-slate-700" for="register-role">Rol</label>
-                                <select name="register-role" class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 focus:border-blue-400 focus:outline-none">
+                                <select  name="register-role" class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 focus:border-blue-400 focus:outline-none">
                                 <option>USER</option>
                                 <option>ADMIN</option>
                                 </select>
                             </div>
                         </div>
 
-                        <button class="inline-flex items-center justify-center rounded-2xl bg-blue-600 px-5 py-3 text-sm font-bold text-white hover:bg-blue-500">
-                        Registrarme
-                        </button>
+                        <div class="grid gap-5 md:grid-cols-2">
+                            <button type="submit" class="cursor-pointer inline-flex items-center justify-center rounded-2xl bg-blue-600 px-5 py-3 text-sm font-bold text-white hover:bg-blue-500">
+                            Registrarme
+                            </button>
+                            <button type="reset" class="cursor-pointer inline-flex items-center justify-center rounded-2xl bg-blue-600 px-5 py-3 text-sm font-bold text-white hover:bg-blue-500">
+                            Cancelar
+                            </button>
+                        </div>
+                            
                     </form>
                 </div>
             </section>
@@ -93,4 +105,15 @@ export const listenersRegister = () => {
         registerForm.reset()
 
     })
+
+    const showPassword = registerForm['show-password'];
+
+    showPassword.addEventListener('change', () => {
+        const passwordInput = registerForm['register-password'];
+        if (showPassword.checked) {
+            passwordInput.type = 'text';
+        } else {
+            passwordInput.type = 'password';
+        }
+    });
 }
