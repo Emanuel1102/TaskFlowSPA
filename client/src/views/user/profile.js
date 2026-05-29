@@ -1,8 +1,12 @@
+import { router } from "../../router/router";
 import { getSession, saveSession } from "../../services/auth.services";
 import { updateUser, verifyUser } from "../../services/users.service";
 
 export const profile = () => {
-    // todo: get the user data here, to set the value of the form inputs, also set the current role in the select input
+    const user = getSession()
+
+    const {name, lastname, email, password} = user
+
     return `
         <header class="border-b border-blue-100 bg-white/90 backdrop-blur">
             <div class="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
@@ -27,36 +31,29 @@ export const profile = () => {
                         <div class="grid gap-5 md:grid-cols-2">
                             <div>
                                 <label class="mb-2 block text-sm font-medium text-slate-700" for="name">Nombre</label>
-                                <input required name="name" id="name" type="text" class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none" />
+                                <input required name="name" id="name" value="${name}" type="text" class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none" />
                             </div>
                             <div>
                                 <label class="mb-2 block text-sm font-medium text-slate-700" for="lastname">Apellido</label>
-                                <input required name="lastname" id="lastname" type="text" class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none" />
+                                <input required name="lastname" id="lastname" value="${lastname}" type="text" class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none" />
                             </div>
                         </div>
 
                         <div>
                             <label class="mb-2 block text-sm font-medium text-slate-700" for="email">Correo</label>
-                            <input required name="email" id="email" type="email" class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none" />
+                            <input required name="email" id="email" value="${email}" type="email" class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none" />
                         </div>
 
                         <div class="grid gap-5 md:grid-cols-2">
                             <div>
                                 <div>
                                     <label class="mb-2 block text-sm font-medium text-slate-700" for="password">Contrasena</label>
-                                    <input required name="password" id="password" type="password" class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none" />
+                                    <input required name="password" id="password" value="${password}" type="password" class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none" />
                                 </div>
                                 <div class="flex items-center gap-2 px-2 my-2">
                                     <input name="show-password" id="show-password" type="checkbox" class="cursor-pointer rounded-2xl bg-blue-50 px-4 py-3 text-slate-900 " />
                                     <label class="cursor-pointer text-sm font-medium text-slate-700" for="show-password">Mostrar Contrasena</label>
                                 </div>
-                            </div>
-                            <div>
-                                <label class="mb-2 block text-sm font-medium text-slate-700" for="role">Rol</label>
-                                <select  name="role" id="role" class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 focus:border-blue-400 focus:outline-none">
-                                <option>USER</option>
-                                <option>ADMIN</option>
-                                </select>
                             </div>
                         </div>
 
@@ -78,15 +75,10 @@ export const profile = () => {
 
 export const listenersProfile = () => {
 
-    let user = getSession()
-    
-    const profileForm = document.getElementById('profile-form');
+    const userData = getSession()
 
-    profileForm.name.value = user.name;
-    profileForm.lastname.value = user.lastname;
-    profileForm.email.value = user.email;
-    profileForm.password.value = user.password;
-    profileForm.role.value = user.role;
+
+    const profileForm = document.getElementById('profile-form');
 
     profileForm['show-password'].addEventListener('change', (e) => {
         const passwordInput = profileForm.password;
@@ -104,20 +96,15 @@ export const listenersProfile = () => {
             lastname: profileForm.lastname.value,
             email: profileForm.email.value,
             password: profileForm.password.value,
-            role: profileForm.role.value
         }
         
-        await updateUser(user.id, updatedUser)
+        await updateUser(userData.id, updatedUser)
 
-        const newSession = await verifyUser(updatedUser.email)
+        const updatedSession = await verifyUser(updatedUser.email)
+        
+        saveSession(updatedSession)        
 
-        saveSession(newSession)        
-
-        user = getSession()
-
-        alert('¡Perfil actualizado con exito!')
-
-        // todo: when the user clicks cancel button, reset the form with the current data
+        router(location.pathname)
     })
 }
 

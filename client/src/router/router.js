@@ -5,7 +5,7 @@ export const handleLocation = () => {
     const path =  location.pathname;
     const page = routes[path] || routes['/not-found']
     const app = document.getElementById('app')
-    app.innerHTML = page.template || page
+    app.innerHTML = page.template()
     page.actions && page.actions()
     navigation()
 }

@@ -11,40 +11,42 @@ import { listenersProfile, profile } from "../views/user/profile";
 export const routes = {
     // auth routes
     "/": {
-        template: home(),
+        template: home,
         actions: listenersHome
     }, 
     "/login": {
-        template: login(),
+        template: login,
         actions: listenersLogin
     },
     "/register": {
-        template: register(),
+        template: register,
         actions: listenersRegister
     },
 
     // user routes
     "/dashboard": {
-        template: dashboard(),
+        template: dashboard,
         actions: listenersDashboard
     },
     "/task-form": {
-        template: taskForm(),
+        template: taskForm,
         actions: () => {}
     },
     "/tasks": {
-        template: tasks(),
+        template: tasks,
         actions: () => {}
     },
     "/admin": {
-        template: admin(),
+        template: admin,
         actions: () => {}
     },
     "/profile": {
-        template: profile(),
+        template: profile,
         actions: listenersProfile
     },
     
     // not found view
-    "/not-found": notFound(),
+    "/not-found": {
+        template: notFound,
+    }
 }

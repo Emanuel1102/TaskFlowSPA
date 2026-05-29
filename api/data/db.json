@@ -17,12 +17,28 @@
       "id": "tG06vU8yTBA"
     },
     {
-      "name": "david",
-      "lastname": "manotas",
-      "email": "emanuel@gmail.com",
-      "password": "emanueldavid",
+      "name": "Juan Fabian",
+      "lastname": "Vasquez Montes",
+      "email": "juan@gmail.com",
+      "password": "juan123",
       "role": "USER",
       "id": "18_ypQrFLvI"
+    },
+    {
+      "name": "Debora Dora",
+      "lastname": "De Hoyos Pión",
+      "email": "debora@gmail.com",
+      "password": "debora1234",
+      "role": "USER",
+      "id": "J_Hn-QnriAI"
+    },
+    {
+      "name": "sofia",
+      "lastname": "quintero",
+      "email": "sofia@gmail.com",
+      "password": "sofia1234",
+      "role": "USER",
+      "id": "EPFDLH9sjTE"
     }
   ],
   "tasks": [],

@@ -100,6 +100,7 @@ export const listenersRegister = () => {
             alert(`${newUser.email} ya existe`)
         }else{
             createUser(newUser)
+            router('/login')
         }
 
         registerForm.reset()
