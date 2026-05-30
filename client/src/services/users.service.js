@@ -4,7 +4,7 @@ export const createUser = async (user) =>{
     await fetch(userEndpoint, {
         method: 'POST',
         headers: {
-            'content-type' : 'aplcation/json'
+            'content-type' : 'application/json'
         },
         body: JSON.stringify(user)
     })
@@ -21,8 +21,14 @@ export const updateUser = async (id, user) => {
     await fetch(`${userEndpoint}/${id}`, {
         method: 'PATCH',
         headers: {
-            'content-type' : 'aplcation/json'
+            'content-type' : 'application/json'
         },
         body: JSON.stringify(user)
+    })
+}
+
+export const deleteUser = async (id) => {
+    await fetch(`${userEndpoint}/${id}`, {
+        method: 'DELETE'
     })
 }

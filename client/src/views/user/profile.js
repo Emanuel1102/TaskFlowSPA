@@ -1,6 +1,6 @@
-import { router } from "../../router/router";
-import { getSession, saveSession } from "../../services/auth.services";
-import { updateUser, verifyUser } from "../../services/users.service";
+import { handleLocation, router } from "../../router/router";
+import { getSession, removeSession, saveSession } from "../../services/auth.services";
+import { deleteUser, updateUser, verifyUser } from "../../services/users.service";
 
 export const profile = () => {
     const user = getSession()
@@ -57,12 +57,15 @@ export const profile = () => {
                             </div>
                         </div>
 
-                        <div class="grid gap-5 md:grid-cols-2">
-                            <button type="submit" class="cursor-pointer inline-flex items-center justify-center rounded-2xl bg-blue-600 px-5 py-3 text-sm font-bold text-white hover:bg-blue-500">
-                            Confirmar cambios
+                        <div class="flex gap-5 justify-evenly">
+                            <button type="submit" class="flex-grow-1 cursor-pointer inline-flex items-center justify-center rounded-2xl bg-blue-600 px-5 py-3 text-sm font-bold text-white hover:bg-blue-500">
+                                Confirmar cambios
                             </button>
-                            <button type="reset" class="cursor-pointer inline-flex items-center justify-center rounded-2xl bg-blue-600 px-5 py-3 text-sm font-bold text-white hover:bg-blue-500">
-                            Cancelar
+                            <button type="reset" class="flex-grow-1 cursor-pointer inline-flex items-center justify-center rounded-2xl bg-blue-600 px-5 py-3 text-sm font-bold text-white hover:bg-blue-500">
+                                Cancelar
+                            </button>
+                            <button id="delete-account" type="reset" class="cursor-pointer border inline-flex items-center justify-center rounded-2xl  px-5 py-3 text-sm font-bold text-blue-700 hover:bg-blue-200">
+                                Eliminar mi cuenta
                             </button>
                         </div>
                             
@@ -76,7 +79,6 @@ export const profile = () => {
 export const listenersProfile = () => {
 
     const userData = getSession()
-
 
     const profileForm = document.getElementById('profile-form');
 
@@ -105,6 +107,20 @@ export const listenersProfile = () => {
         saveSession(updatedSession)        
 
         router(location.pathname)
+    })
+
+    const deleteAccountButton = document.getElementById('delete-account')
+    deleteAccountButton.addEventListener('click', async () => {
+        const confirmDelete = confirm('¿Estás seguro de que deseas eliminar tu cuenta? Esta acción no se puede deshacer.')
+        // todo: when the user attempts back whitout a session, redirect to login page
+        if (confirmDelete) {
+            await deleteUser(userData.id)
+            removeSession()
+            history.replaceState({}, '', '/')
+            handleLocation()
+        }else{
+            alert('Eliminación cancelada')
+        }
     })
 }
 
