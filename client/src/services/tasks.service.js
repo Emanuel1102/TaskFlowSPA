@@ -1,0 +1,37 @@
+const tasksEndpoint =  'http://localhost:3000/tasks'
+
+export const createTask = async (task) =>{
+    await fetch(tasksEndpoint, {
+        method: 'POST',
+        headers: {
+            'content-type' : 'application/json'
+        },
+        body: JSON.stringify(task)
+    })
+}
+
+export const updateTask = async (id, task) => {
+    await fetch(`${tasksEndpoint}/${id}`, {
+        method: 'PATCH',
+        headers: {
+            'content-type' : 'application/json'
+        },
+        body: JSON.stringify(task)
+    })
+}
+
+export const deleteTask = async (id) => {
+    await fetch(`${tasksEndpoint}/${id}`, {
+        method: 'DELETE'
+    })
+}
+
+export const getTasks = async (idUser) => {
+    const response = await fetch(`${tasksEndpoint}?createdBy=${idUser}`)
+
+    const tasks = await response.json()
+
+    return tasks
+    
+}
+

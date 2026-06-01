@@ -25,6 +25,55 @@
       "id": "EPFDLH9sjTE"
     }
   ],
-  "tasks": [],
+  "tasks": [
+    {
+      "title": "titulo",
+      "description": "descripcion",
+      "status": "completed",
+      "deadline": "2026-06-03",
+      "createdBy": "fDqgBhaTJ1Y",
+      "id": "Nc8prh04TcY"
+    },
+    {
+      "title": "funcionalidades pendientes",
+      "description": "actualizar y eliminar tareas\nvista administrativa (edicion y eliminacion de usuarios y de tareas)\nproteccion de rutas \nvalidaciones",
+      "status": "pending",
+      "deadline": "2026-06-05",
+      "createdBy": "fDqgBhaTJ1Y",
+      "id": "B0dTD-ZMm30"
+    },
+    {
+      "title": "funcionalidades",
+      "description": "editar tareas\neliminar tareas",
+      "status": "in-progress",
+      "deadline": "2026-06-05",
+      "createdBy": "fDqgBhaTJ1Y",
+      "id": "52q2Lk7pZJg"
+    },
+    {
+      "title": "title",
+      "description": "desc",
+      "status": "pending",
+      "deadline": "2026-06-10",
+      "createdBy": "fDqgBhaTJ1Y",
+      "id": "kMDQhozh0-0"
+    },
+    {
+      "title": "tarea de prueba",
+      "description": "test para comprobar si se renderizan",
+      "status": "in-progress",
+      "deadline": "2026-06-24",
+      "createdBy": "fDqgBhaTJ1Y",
+      "id": "azxFS4uTFzk"
+    },
+    {
+      "title": "trotar",
+      "description": "levantarme a las 5 y trotar 6km",
+      "status": "completed",
+      "deadline": "2026-06-01",
+      "createdBy": "J_Hn-QnriAI",
+      "id": "EADECvUg0g4"
+    }
+  ],
   "$schema": "./node_modules/json-server/schema.json"
 }

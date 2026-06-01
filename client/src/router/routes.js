@@ -3,8 +3,8 @@ import { listenersLogin, login } from "../views/auth/login";
 import { listenersRegister, register } from "../views/auth/register";
 import { dashboard, listenersDashboard } from "../views/user/dashboard";
 import { notFound } from "../views/auth/notFound";
-import { taskForm } from "../views/tasks/taskForm";
-import { tasks } from "../views/tasks/tasks";
+import { taskForm, taskFormListeners } from "../views/tasks/taskForm";
+import { listenersTasks, tasks } from "../views/tasks/tasks";
 import { admin } from "../views/user/admin";
 import { listenersProfile, profile } from "../views/user/profile";
 
@@ -30,11 +30,11 @@ export const routes = {
     },
     "/task-form": {
         template: taskForm,
-        actions: () => {}
+        actions: taskFormListeners
     },
     "/tasks": {
         template: tasks,
-        actions: () => {}
+        actions: listenersTasks
     },
     "/admin": {
         template: admin,
