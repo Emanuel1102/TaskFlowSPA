@@ -1,3 +1,4 @@
+import { router } from "../../router/router"
 import { getSession } from "../../services/auth.services"
 import { createTask } from "../../services/tasks.service"
 
@@ -83,6 +84,8 @@ export const taskFormListeners = () => {
         }
         
         createTask(task)
+
+        router('/tasks')
         
         e.target.reset()
     })
