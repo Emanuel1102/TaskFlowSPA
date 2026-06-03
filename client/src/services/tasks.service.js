@@ -27,7 +27,7 @@ export const deleteTask = async (id) => {
 }
 
 export const getTasks = async (idUser) => {
-    const response = await fetch(`${tasksEndpoint}?createdBy=${idUser}`)
+    const response = await fetch(`${tasksEndpoint}?userId=${idUser}`)
 
     const tasks = await response.json()
 

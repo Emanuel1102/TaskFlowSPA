@@ -1,7 +1,7 @@
 import { getSession, removeSession } from "../../services/auth.services";
+import { getTasks } from "../../services/tasks.service";
 
 export const dashboard = () => {
-    // todo: display tasks by status; pneding, in progress and completed
     return `
         <header class="border-b border-blue-100 bg-white/90 backdrop-blur">
             <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
@@ -25,15 +25,15 @@ export const dashboard = () => {
             <section class="mt-8 grid gap-4 md:grid-cols-3">
                 <article class="rounded-3xl border border-blue-100 bg-white p-6 shadow-lg shadow-blue-50">
                     <p class="text-sm text-slate-500">Tareas activas</p>
-                    <p id="active-tasks" class="mt-3 text-4xl font-black text-blue-700">0</p>
+                    <p id="active-tasks" class="mt-3 text-4xl font-black text-blue-700"></p>
                 </article>
                 <article class="rounded-3xl border border-blue-100 bg-white p-6 shadow-lg shadow-blue-50">
                     <p class="text-sm text-slate-500">Completadas</p>
-                    <p id="completed-tasks" class="mt-3 text-4xl font-black text-blue-700">0</p>
+                    <p id="completed-tasks" class="mt-3 text-4xl font-black text-blue-700"></p>
                 </article>
                 <article class="rounded-3xl border border-blue-100 bg-white p-6 shadow-lg shadow-blue-50">
-                    <p class="text-sm text-slate-500">Pendientes hoy</p>
-                    <p id="pending-tasks" class="mt-3 text-4xl font-black text-blue-700">0</p>
+                    <p class="text-sm text-slate-500">Pendientes</p>
+                    <p id="pending-tasks" class="mt-3 text-4xl font-black text-blue-700"></p>
                 </article>
             </section>
 
@@ -59,7 +59,7 @@ export const dashboard = () => {
     `
 }
 
-export const listenersDashboard = ()=> {
+export const listenersDashboard = async ()=> {
     const welcomeMessage = document.getElementById('welcome-message');
     const user = getSession()
     welcomeMessage.textContent = `¡Que bien tenerte de vuelta, ${user.name}!`;
@@ -68,4 +68,27 @@ export const listenersDashboard = ()=> {
     logoutLink.addEventListener('click', () => {
         removeSession()
     })
+
+    const tasks = await getTasks(user.id)
+
+    const pendingTasks = document.getElementById('pending-tasks')
+    const activeTasks = document.getElementById('active-tasks')
+    const completedTasks = document.getElementById('completed-tasks')
+
+    pendingTasks.textContent = tasks.reduce((acc, task) => {
+        task.status == 'pending' && acc++
+        return acc
+    }, 0)
+    
+    activeTasks.textContent = tasks.reduce((acc, task) => {
+        task.status == 'in-progress' && acc++
+        return acc
+    }, 0)
+
+    completedTasks.textContent = tasks.reduce((acc, task) => {
+        task.status == 'completed' && acc++
+        return acc
+    }, 0)
+    
+
 }

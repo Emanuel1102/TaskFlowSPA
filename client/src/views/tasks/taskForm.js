@@ -36,7 +36,7 @@ export const taskForm = () => {
 
                     <div>
                         <label class="mb-2 block text-sm font-medium text-slate-700" for="description">Descripcion</label>
-                        <textarea name="description" required id="description" rows="5" placeholder="Describe la tarea..." class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none"></textarea>
+                        <textarea name="description" id="description" rows="5" placeholder="Describe la tarea..." class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none"></textarea>
                     </div>
 
                     <div class="grid gap-5 md:grid-cols-2">
@@ -50,7 +50,7 @@ export const taskForm = () => {
                         </div>
                         <div>
                             <label class="mb-2 block text-sm font-medium text-slate-700" for="date">Fecha limite</label>
-                            <input name="deadline" required id="date" type="date" class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 focus:border-blue-400 focus:outline-none" />
+                            <input name="deadline" id="date" type="date" class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 focus:border-blue-400 focus:outline-none" />
                         </div>
                     </div>
 
@@ -73,20 +73,22 @@ export const taskFormListeners = () => {
 
     const currentUser = getSession()
 
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
         e.preventDefault()
         const task = {
             title: form.title.value.trim(),
             description: form.description.value.trim(),
             status: form.status.value,
             deadline: form.deadline.value,
-            createdBy: currentUser.id
+            userId: currentUser.id
         }
-        
-        createTask(task)
 
-        router('/tasks')
+        await createTask(task)
         
         e.target.reset()
+
+        const viewTasks = confirm('¿Ir a las tareas?')
+
+        viewTasks && router('/tasks')
     })
 }

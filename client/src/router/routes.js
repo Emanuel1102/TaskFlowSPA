@@ -5,7 +5,7 @@ import { dashboard, listenersDashboard } from "../views/user/dashboard";
 import { notFound } from "../views/auth/notFound";
 import { taskForm, taskFormListeners } from "../views/tasks/taskForm";
 import { listenersTasks, tasks } from "../views/tasks/tasks";
-import { admin } from "../views/user/admin";
+import { admin, listenersAdmin } from "../views/user/admin";
 import { listenersProfile, profile } from "../views/user/profile";
 
 export const routes = {
@@ -38,7 +38,7 @@ export const routes = {
     },
     "/admin": {
         template: admin,
-        actions: () => {}
+        actions: listenersAdmin
     },
     "/profile": {
         template: profile,
