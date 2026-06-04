@@ -25,7 +25,7 @@ export const login = () => {
                         </div>
                         <div>
                             <label class="mb-2 block text-sm font-medium text-slate-700" for="password">Contrasena</label>
-                            <input name="password" id="password" type="password" placeholder="Ingresa tu contrasena" class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none" />
+                            <input required name="password" id="password" type="password" placeholder="Ingresa tu contrasena" class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none" />
                         </div>
                         <div class="flex items-center gap-2 px-2 mb-2">
                             <input name="show-password" id="show-password" type="checkbox" class="cursor-pointer rounded-2xl bg-blue-50 px-4 py-3 text-slate-900 " />

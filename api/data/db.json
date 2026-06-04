@@ -23,21 +23,21 @@
       "password": "sofia1234",
       "role": "USER",
       "id": "EPFDLH9sjTE"
+    },
+    {
+      "name": "Luis manuel",
+      "lastname": "Orozco",
+      "email": "luis@gmail.com",
+      "password": "luis1234",
+      "role": "ADMIN",
+      "id": "nQF3kuFwUm8"
     }
   ],
   "tasks": [
     {
-      "title": "tarea nueva",
-      "description": "esta es una tarea nueva con descripcion mas larga para probar renderizacion\nmas texto\nmas texto\nmas texto",
-      "status": "completed",
-      "deadline": "",
-      "userId": "EPFDLH9sjTE",
-      "id": "0tHsztuK3Tc"
-    },
-    {
       "title": "entrenar",
-      "description": "20 flexiones\n5 dominadas\n20 abdominales\n3 series",
-      "status": "pending",
+      "description": "20 flexiones\n5 dominadas\n20 abdominales\n3 series\n",
+      "status": "in-progress",
       "deadline": "",
       "userId": "fDqgBhaTJ1Y",
       "id": "K7nP837GwaU"
@@ -49,6 +49,14 @@
       "deadline": "",
       "userId": "J_Hn-QnriAI",
       "id": "hl5D9PZ95Eo"
+    },
+    {
+      "title": "tarea",
+      "description": "nueva descripcion",
+      "status": "pending",
+      "deadline": "",
+      "userId": "EPFDLH9sjTE",
+      "id": "rlmfszObGVE"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

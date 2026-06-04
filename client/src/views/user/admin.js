@@ -1,4 +1,5 @@
-import { getAllTasks } from "../../services/admin.service"
+import { getAllTasks, getUsers } from "../../services/admin.service"
+import { getSession } from "../../services/auth.services"
 import { deleteTask, updateTask } from "../../services/tasks.service"
 
 export const admin = () => {
@@ -87,7 +88,7 @@ export const admin = () => {
                         <h2 class="text-xl font-bold text-slate-900">Usuarios</h2>
                         <span class="rounded-full bg-blue-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.25em] text-blue-700">Mockup</span>
                     </div>
-                    <div class="mt-5 space-y-4">
+                    <div id="all-users" class="mt-5 space-y-4">
                         <div class="rounded-2xl bg-blue-50 p-4">
                             <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
                                 <div>
@@ -146,7 +147,7 @@ const renderTasks = (tasks) => {
                                 Eliminar
                             </button>
                         </div>
-                        <span class="mt-3 max-w-2xl text-sm text-slate-900">Creada por ${user.name}</span>
+                        <span class="mt-3 max-w-2xl text-sm text-slate-900">Creada por ${user.email}</span>
                     </div>
                 </div>
             </article>
@@ -158,10 +159,49 @@ const renderTasks = (tasks) => {
 
 }
 
+const renderUsers = (users) => {
+
+    const usersList = document.getElementById('all-users')
+
+    usersList.innerHTML = ''
+    
+    const currentUser = getSession()
+
+    for (const user of users) {
+
+        if (currentUser.id == user.id ) {
+            continue
+        }
+
+        const {name, email, role} = user
+
+        usersList.innerHTML += `
+            <div class="rounded-2xl bg-blue-50 p-4">
+                <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+                    <div>
+                        <p class="font-bold text-slate-900">${name}</p>
+                        <p class="text-sm text-slate-500">${email}</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <span class="rounded-full bg-white px-3 py-1 text-xs font-bold text-blue-700">${role}</span>
+                        <button class="rounded-full border border-blue-200 px-3 py-1 text-xs font-semibold text-blue-700 hover:bg-white cursor-pointer">Editar</button>
+                    </div>
+                </div>
+            </div>
+        `
+    }
+}
+
 export const listenersAdmin = async () => {
+
     const tasks = await getAllTasks()
 
     renderTasks(tasks)
+
+    const users = await getUsers()
+
+    renderUsers(users)
+
 
     
     const tasksModal = document.getElementById('admin-task-modal')
@@ -236,5 +276,5 @@ export const listenersAdmin = async () => {
             taskFormAdmin.removeAttribute('data-task-id')
 
         })
-    })    
+    })        
 }

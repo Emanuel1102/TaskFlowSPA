@@ -1,4 +1,4 @@
-const userEndpoint =  'http://localhost:3000/users'
+export const userEndpoint =  'http://localhost:3000/users'
 
 export const createUser = async (user) =>{
     await fetch(userEndpoint, {
