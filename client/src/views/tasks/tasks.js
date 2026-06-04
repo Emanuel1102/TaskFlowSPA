@@ -32,12 +32,12 @@ export const tasks = () => {
                 <form id="edit-task-form" class="mt-8 grid gap-5 w-150 p-4 rounded-3xl bg-slate-300 border border-slate-500">
                     <div>
                         <label class="mb-2 block text-sm font-medium text-slate-700" for="title">Titulo</label>
-                        <input name="title" value="" required id="title" type="text" placeholder="Ej. Preparar proyecto final" class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none" />
+                        <input name="title" required id="title" type="text" placeholder="Ej. Preparar proyecto final" class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none" />
                     </div>
 
                     <div>
                         <label class="mb-2 block text-sm font-medium text-slate-700" for="description">Descripcion</label>
-                        <textarea name="description" required id="description" rows="5" placeholder="Describe la tarea..." class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none"></textarea>
+                        <textarea name="description" id="description" rows="5" placeholder="Describe la tarea..." class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none"></textarea>
                     </div>
 
                     <div class="grid gap-5 md:grid-cols-2">
@@ -51,7 +51,7 @@ export const tasks = () => {
                         </div>
                         <div>
                             <label class="mb-2 block text-sm font-medium text-slate-700" for="date">Fecha limite</label>
-                            <input name="deadline" required id="date" type="date" class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 focus:border-blue-400 focus:outline-none" />
+                            <input name="deadline" id="date" type="date" class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 focus:border-blue-400 focus:outline-none" />
                         </div>
                     </div>
 

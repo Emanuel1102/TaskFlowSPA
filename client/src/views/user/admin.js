@@ -1,5 +1,5 @@
 import { getAllTasks } from "../../services/admin.service"
-import { updateTask } from "../../services/tasks.service"
+import { deleteTask, updateTask } from "../../services/tasks.service"
 
 export const admin = () => {
     return `
@@ -7,10 +7,18 @@ export const admin = () => {
             <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
                 <a class="text-xl font-black text-blue-900" href="/src/views/home.html">TaskFlowSPA</a>
                 <nav class="hidden gap-3 md:flex">
-                    <a class="rounded-full px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-blue-50 hover:text-blue-700" href="/dashboard">Dashboard</a>
-                    <a class="rounded-full px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-blue-50 hover:text-blue-700" href="/tasks">Tareas</a>
-                    <a class="rounded-full px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-blue-50 hover:text-blue-700" href="/profile">Perfil</a>
-                    <a class="rounded-full bg-blue-600 px-4 py-2 text-sm font-semibold text-white" href="/admin">Admin</a>
+                    <a class="navigation rounded-full px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-blue-50 hover:text-blue-700" href="/dashboard">
+                        Dashboard
+                    </a>
+                    <a class="navigation rounded-full px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-blue-50 hover:text-blue-700" href="/tasks">
+                        Tareas
+                    </a>
+                    <a class="navigation rounded-full px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-blue-50 hover:text-blue-700" href="/profile">
+                        Perfil
+                    </a>
+                    <a class="navigation rounded-full bg-blue-600 px-4 py-2 text-sm font-semibold text-white" href="/admin">
+                        Admin
+                    </a>
                 </nav>
             </div>
         </header>
@@ -120,7 +128,7 @@ const renderTasks = (tasks) => {
 
     for (const task of tasks) {
 
-        const {status, title, description, user} = task
+        const {id, status, title, description, user} = task
         tasksList.innerHTML += `
             <article class="rounded-3xl border border-blue-100 bg-white p-6 shadow-lg shadow-blue-50">
                 <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
@@ -134,7 +142,7 @@ const renderTasks = (tasks) => {
                             <button data-task='${JSON.stringify(task)}' class="edit-task-btn cursor-pointer rounded-full border border-blue-200 px-4 py-2 text-sm font-semibold text-blue-700 hover:bg-blue-50">
                                 Editar
                             </button>
-                            <button data-id="" class="delete-task-btn cursor-pointer rounded-full border border-blue-200 px-4 py-2 text-sm font-semibold text-blue-700 hover:bg-blue-50">
+                            <button data-task-id="${id}" class="delete-task-btn cursor-pointer rounded-full border border-blue-200 px-4 py-2 text-sm font-semibold text-blue-700 hover:bg-blue-50">
                                 Eliminar
                             </button>
                         </div>
@@ -160,12 +168,13 @@ export const listenersAdmin = async () => {
     
     const taskFormAdmin = document.getElementById('task-form-admin')    
     
-    const editTaskButtons = document.querySelectorAll('.edit-task-btn')
+    const tasksList = document.getElementById('all-tasks')
 
-    editTaskButtons.forEach(btn => {
-
-        btn.addEventListener('click', ({target})=> {
-            const task = JSON.parse(target.dataset.task)
+    tasksList.addEventListener('click', async ({target})=> {
+        const btnEdit = target.closest('.edit-task-btn')
+        if (btnEdit) {
+            
+            const task = JSON.parse(btnEdit.dataset.task)            
             
             tasksModal.showModal()
             
@@ -173,12 +182,26 @@ export const listenersAdmin = async () => {
             taskFormAdmin.description.value = task.description
             taskFormAdmin.status.value = task.status
             taskFormAdmin.deadline.value = task.deadline
+    
+            taskFormAdmin.dataset.taskId = task.id   
+        }
 
-            taskFormAdmin.dataset.taskId = task.id
+        const btnDelete = target.closest('.delete-task-btn')
+        if (btnDelete) {
+            const confirmDelete = confirm('¿seguro que quieres eliminar esta tarea?')
+            if (confirmDelete) {
+                
+                const taskId = btnDelete.dataset.taskId
+                
+                await deleteTask(taskId)
+    
+                const updatedTasks = await getAllTasks()
+    
+                renderTasks(updatedTasks)
+            }
+        }
 
-        })
-        
-    });
+    })
 
     taskFormAdmin.addEventListener('submit', async (e) => {
         e.preventDefault()

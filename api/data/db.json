@@ -27,36 +27,28 @@
   ],
   "tasks": [
     {
-      "title": "tarea",
-      "description": "descripcion",
-      "status": "pending",
-      "deadline": "2026-06-03",
-      "userId": "fDqgBhaTJ1Y",
-      "id": "3PQpYXy2q6Y"
-    },
-    {
-      "title": "terminar proyecto",
-      "description": "otra descripcion mas",
-      "status": "in-progress",
-      "deadline": "2026-06-05",
-      "userId": "fDqgBhaTJ1Y",
-      "id": "15dlqY38zTo"
-    },
-    {
-      "title": "trotar",
-      "description": "levantarme a las 5 am y trotar 5 km",
-      "status": "pending",
+      "title": "tarea nueva",
+      "description": "esta es una tarea nueva con descripcion mas larga para probar renderizacion\nmas texto\nmas texto\nmas texto",
+      "status": "completed",
       "deadline": "",
-      "userId": "J_Hn-QnriAI",
-      "id": "UlqQDbDXOj0"
+      "userId": "EPFDLH9sjTE",
+      "id": "0tHsztuK3Tc"
     },
     {
       "title": "entrenar",
-      "description": "flexiones 3x20\ndominadas 3x5\nabdominales 3x20",
+      "description": "20 flexiones\n5 dominadas\n20 abdominales\n3 series",
       "status": "pending",
-      "deadline": "2026-06-03",
+      "deadline": "",
       "userId": "fDqgBhaTJ1Y",
-      "id": "WmyzaFMlGYw"
+      "id": "K7nP837GwaU"
+    },
+    {
+      "title": "trotar",
+      "description": "levantarme a las 5AM y trotar 5km",
+      "status": "pending",
+      "deadline": "",
+      "userId": "J_Hn-QnriAI",
+      "id": "hl5D9PZ95Eo"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
