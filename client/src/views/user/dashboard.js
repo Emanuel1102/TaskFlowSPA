@@ -2,15 +2,17 @@ import { getSession, removeSession } from "../../services/auth.services";
 import { getTasks } from "../../services/tasks.service";
 
 export const dashboard = () => {
+    const currentUser = getSession()
     return `
         <header class="border-b border-blue-100 bg-white/90 backdrop-blur">
             <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-                <a class="text-xl font-black text-blue-900" href="/src/views/home.html">TaskFlowSPA</a>
+                <a class="navigation text-xl font-black text-blue-900" href="/dashboard">TaskFlowSPA</a>
                 <nav class="hidden gap-3 md:flex">
                     <a class="navigation rounded-full bg-blue-600 px-4 py-2 text-sm font-semibold text-white" href="/dashboard">Dashboard</a>
                     <a class="navigation rounded-full px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-blue-50 hover:text-blue-700" href="/tasks">Tareas</a>
                     <a class="navigation rounded-full px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-blue-50 hover:text-blue-700" href="/profile">Perfil</a>
-                    <a class="navigation rounded-full px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-blue-50 hover:text-blue-700" href="/admin">Admin</a>
+                    ${currentUser.role == 'ADMIN' ? `<a class="navigation rounded-full px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-blue-50 hover:text-blue-700" href="/admin">Admin</a>` : ''}
+                    
                     <a id="logout-link" class="navigation rounded-full px-4 py-2 text-sm font-semibold text-blue-700 hover:bg-blue-50" href="/login">Logout</a>
                 </nav>
             </div>

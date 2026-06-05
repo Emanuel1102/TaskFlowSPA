@@ -1,12 +1,13 @@
 import { getAllTasks, getUsers } from "../../services/admin.service"
 import { getSession } from "../../services/auth.services"
 import { deleteTask, updateTask } from "../../services/tasks.service"
+import { deleteUser, updateUser } from "../../services/users.service"
 
 export const admin = () => {
     return `
         <header class="border-b border-blue-100 bg-white/90 backdrop-blur">
             <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-                <a class="text-xl font-black text-blue-900" href="/src/views/home.html">TaskFlowSPA</a>
+                <a class="navigation text-xl font-black text-blue-900" href="/dashboard">TaskFlowSPA</a>
                 <nav class="hidden gap-3 md:flex">
                     <a class="navigation rounded-full px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-blue-50 hover:text-blue-700" href="/dashboard">
                         Dashboard
@@ -88,33 +89,58 @@ export const admin = () => {
                         <h2 class="text-xl font-bold text-slate-900">Usuarios</h2>
                         <span class="rounded-full bg-blue-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.25em] text-blue-700">Mockup</span>
                     </div>
-                    <div id="all-users" class="mt-5 space-y-4">
-                        <div class="rounded-2xl bg-blue-50 p-4">
-                            <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-                                <div>
-                                    <p class="font-bold text-slate-900">Nombre</p>
-                                    <p class="text-sm text-slate-500">correo</p>
-                                </div>
-                                <div class="flex gap-2">
-                                    <span class="rounded-full bg-white px-3 py-1 text-xs font-bold text-blue-700">ROL</span>
-                                    <button class="rounded-full border border-blue-200 px-3 py-1 text-xs font-semibold text-blue-700 hover:bg-white">Editar</button>
-                                </div>
-                            </div>
-                        </div>
 
-                        
-                        <div class="rounded-2xl bg-blue-50 p-4">
-                            <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+                    <dialog id="admin-users-modal" class="open:flex items-center justify-center z-10 w-full h-full items-center justify-center bg-transparent">
+                        <form id="user-form-admin" class="mt-8 grid gap-5 w-150 p-4 rounded-3xl bg-slate-300 border border-slate-500">
+                           <div class="grid gap-5 md:grid-cols-2">
                                 <div>
-                                    <p class="font-bold text-slate-900">Nombre</p>
-                                    <p class="text-sm text-slate-500">correo</p>
+                                    <label class="mb-2 block text-sm font-medium text-slate-700" for="name">Nombre</label>
+                                    <input required name="name" id="name" type="text" class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none" />
                                 </div>
-                                <div class="flex gap-2">
-                                    <span class="rounded-full bg-white px-3 py-1 text-xs font-bold text-blue-700">ROL</span>
-                                    <button class="rounded-full border border-blue-200 px-3 py-1 text-xs font-semibold text-blue-700 hover:bg-white">Editar</button>
+                                <div>
+                                    <label class="mb-2 block text-sm font-medium text-slate-700" for="lastname">Apellido</label>
+                                    <input required name="lastname" id="lastname" type="text" class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none" />
                                 </div>
                             </div>
-                        </div>
+
+                            <div>
+                                <label class="mb-2 block text-sm font-medium text-slate-700" for="email">Correo</label>
+                                <input required name="email" id="email" type="email" class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none" />
+                            </div>
+
+                            <div class="grid gap-5 md:grid-cols-2">
+                                <div>
+                                    <div>
+                                        <label class="mb-2 block text-sm font-medium text-slate-700" for="password">Contrasena</label>
+                                        <input required name="password" id="password" type="password" class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none" />
+                                    </div>
+                                    <div class="flex items-center gap-2 px-2 my-2">
+                                        <input name="show-password" id="show-password" type="checkbox" class="cursor-pointer rounded-2xl bg-blue-50 px-4 py-3 text-slate-900 " />
+                                        <label class="cursor-pointer text-sm font-medium text-slate-700" for="show-password">Mostrar Contrasena</label>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="mb-2 block text-sm font-medium text-slate-700" for="role">Rol</label>
+                                    <select id="role" name="role" class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 focus:border-blue-400 focus:outline-none">
+                                        <option>USER</option>
+                                        <option>ADMIN</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="flex gap-5 justify-evenly">
+                                <button type="submit" class="flex-grow-1 cursor-pointer inline-flex items-center justify-center rounded-2xl bg-blue-600 px-5 py-3 text-sm font-bold text-white hover:bg-blue-500">
+                                    Confirmar cambios
+                                </button>
+                                <button type="reset" class="cancel-edition-btn flex-grow-1 cursor-pointer inline-flex items-center justify-center rounded-2xl bg-blue-600 px-5 py-3 text-sm font-bold text-white hover:bg-blue-500">
+                                    Cancelar
+                                </button>
+                               
+                            </div>
+                        </form>
+                    </dialog>
+
+                    <div id="all-users" class="mt-5 space-y-4">
 
                     </div>
                 </article>
@@ -127,9 +153,13 @@ const renderTasks = (tasks) => {
     const tasksList = document.getElementById('all-tasks')
     tasksList.innerHTML = ''
 
-    for (const task of tasks) {
-
+    
+    for (const task of tasks) {     
+        
         const {id, status, title, description, user} = task
+
+        const creator = user ? user.email : 'usuario eliminado'
+
         tasksList.innerHTML += `
             <article class="rounded-3xl border border-blue-100 bg-white p-6 shadow-lg shadow-blue-50">
                 <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
@@ -147,7 +177,7 @@ const renderTasks = (tasks) => {
                                 Eliminar
                             </button>
                         </div>
-                        <span class="mt-3 max-w-2xl text-sm text-slate-900">Creada por ${user.email}</span>
+                        <span class="mt-3 max-w-2xl text-sm text-slate-900">Creada por ${creator}</span>
                     </div>
                 </div>
             </article>
@@ -155,8 +185,6 @@ const renderTasks = (tasks) => {
         `
         
     }
-    
-
 }
 
 const renderUsers = (users) => {
@@ -184,7 +212,12 @@ const renderUsers = (users) => {
                     </div>
                     <div class="flex gap-2">
                         <span class="rounded-full bg-white px-3 py-1 text-xs font-bold text-blue-700">${role}</span>
-                        <button class="rounded-full border border-blue-200 px-3 py-1 text-xs font-semibold text-blue-700 hover:bg-white cursor-pointer">Editar</button>
+                        <button data-user='${JSON.stringify(user)}' class="edit-user-btn rounded-full border border-blue-200 px-3 py-1 text-xs font-semibold text-blue-700 hover:bg-white cursor-pointer">
+                            Editar
+                        </button>
+                        <button data-user='${JSON.stringify(user)}' class="delete-user-btn rounded-full border border-blue-200 px-3 py-1 text-xs font-semibold text-blue-700 hover:bg-white cursor-pointer">
+                            Eliminar
+                        </button>
                     </div>
                 </div>
             </div>
@@ -247,8 +280,8 @@ export const listenersAdmin = async () => {
         e.preventDefault()
 
         const taskToUpdate = {
-            title : taskFormAdmin.title.value,
-            description : taskFormAdmin.description.value,
+            title : taskFormAdmin.title.value.trim(),
+            description : taskFormAdmin.description.value.trim(),
             status : taskFormAdmin.status.value,
             deadline : taskFormAdmin.deadline.value,
         }
@@ -272,9 +305,98 @@ export const listenersAdmin = async () => {
     cancelEditButtons.forEach(btn => {
         btn.addEventListener('click', ({target}) => {
             const modalToClose = target.closest('dialog')
+            const form = modalToClose.querySelector('form')
+            form.removeAttribute('data-task-id') || form.removeAttribute('data-user-id') 
             modalToClose.close()
-            taskFormAdmin.removeAttribute('data-task-id')
 
         })
     })        
+    
+
+    const usersList = document.getElementById('all-users')
+
+    const modalUsers = document.getElementById('admin-users-modal')
+
+    const userFormAdmin = document.getElementById('user-form-admin')    
+
+    const showPassword = userFormAdmin['show-password']
+    showPassword.addEventListener('change', () => {
+        showPassword.checked ? userFormAdmin.password.type = 'text' : userFormAdmin.password.type = 'password'
+    })
+    
+ 
+
+    usersList.addEventListener('click', async ({target}) => {
+        const editBtn = target.closest('.edit-user-btn')
+        if (editBtn) {
+
+            modalUsers.showModal()            
+
+            const user = JSON.parse(editBtn.dataset.user)
+
+            userFormAdmin.name.value = user.name
+            userFormAdmin.lastname.value = user.lastname
+            userFormAdmin.email.value = user.email
+            userFormAdmin.password.value = user.password
+            userFormAdmin.role.value = user.role
+
+            userFormAdmin.dataset.userId = user.id
+            
+            
+        }
+
+        const deleteBtn = target.closest('.delete-user-btn')
+        if (deleteBtn) {
+            const user = JSON.parse(deleteBtn.dataset.user)          
+            
+            const confirmDelete = confirm(`¿Eliminar la cuenta de ${user.name}?`)
+            if (confirmDelete) {
+                
+                await deleteUser(user.id)
+                
+                const updatedUsers = await getUsers()
+
+                renderUsers(updatedUsers)
+
+                const updatedTasks = await getAllTasks()
+
+                renderTasks(updatedTasks)
+            }            
+        }
+    })
+
+    userFormAdmin.addEventListener('submit', async (e) => {
+        e.preventDefault()
+        const userToUpdate = {
+            name: userFormAdmin.name.value.trim(),
+            lastname: userFormAdmin.lastname.value.trim(),
+            email: userFormAdmin.email.value.trim(),
+            password: userFormAdmin.password.value.trim(),
+            role: userFormAdmin.role.value,
+        }
+        const userId = userFormAdmin.dataset.userId
+
+        await updateUser(userId, userToUpdate)
+
+        const updatedUsers = await getUsers()
+        
+        modalUsers.close()
+
+        userFormAdmin.reset()
+
+        userFormAdmin.removeAttribute('data-user-id')
+
+        renderUsers(updatedUsers)
+        
+    })
+
+
+
+    document.addEventListener('keyup', (e) => {
+       if (e.key == 'Escape') {
+            taskFormAdmin.reset() || userFormAdmin.reset()
+            taskFormAdmin.removeAttribute('data-task-id') || userFormAdmin.removeAttribute('data-user-id') 
+       }  
+    })
+    
 }

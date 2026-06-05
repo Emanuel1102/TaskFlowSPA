@@ -57,8 +57,8 @@ export const register = () => {
                             <div>
                                 <label class="mb-2 block text-sm font-medium text-slate-700" for="register-role">Rol</label>
                                 <select  name="register-role" class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 focus:border-blue-400 focus:outline-none">
-                                <option>USER</option>
-                                <option>ADMIN</option>
+                                    <option>USER</option>
+                                    <option>ADMIN</option>
                                 </select>
                             </div>
                         </div>

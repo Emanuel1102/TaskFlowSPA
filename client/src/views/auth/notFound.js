@@ -13,3 +13,10 @@ export const notFound = () => {
     `
 }
 
+export const listenersNotFound = () => {
+    const back = document.getElementById('btn-back')
+    back.addEventListener('click', () => {
+        history.back()
+    })
+}
+

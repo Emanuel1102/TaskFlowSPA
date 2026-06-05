@@ -1,8 +1,8 @@
-import { home, listenersHome } from "../views/home";
+import { home } from "../views/home";
 import { listenersLogin, login } from "../views/auth/login";
 import { listenersRegister, register } from "../views/auth/register";
 import { dashboard, listenersDashboard } from "../views/user/dashboard";
-import { notFound } from "../views/auth/notFound";
+import { listenersNotFound, notFound } from "../views/auth/notFound";
 import { taskForm, taskFormListeners } from "../views/tasks/taskForm";
 import { listenersTasks, tasks } from "../views/tasks/tasks";
 import { admin, listenersAdmin } from "../views/user/admin";
@@ -12,21 +12,23 @@ export const routes = {
     // auth routes
     "/": {
         template: home,
-        actions: listenersHome
+        isPublic: true
     }, 
     "/login": {
         template: login,
-        actions: listenersLogin
+        actions: listenersLogin,
+        isPublic: true
     },
     "/register": {
         template: register,
-        actions: listenersRegister
+        actions: listenersRegister,
+        isPublic: true
     },
 
     // user routes
     "/dashboard": {
         template: dashboard,
-        actions: listenersDashboard
+        actions: listenersDashboard,
     },
     "/task-form": {
         template: taskForm,
@@ -38,7 +40,8 @@ export const routes = {
     },
     "/admin": {
         template: admin,
-        actions: listenersAdmin
+        actions: listenersAdmin,
+        onlyAdmin: true
     },
     "/profile": {
         template: profile,
@@ -48,5 +51,6 @@ export const routes = {
     // not found view
     "/not-found": {
         template: notFound,
+        actions: listenersNotFound
     }
 }

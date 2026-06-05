@@ -9,54 +9,54 @@
       "id": "fDqgBhaTJ1Y"
     },
     {
-      "name": "Debora Dora",
-      "lastname": "De Hoyos Pión",
-      "email": "debora@gmail.com",
-      "password": "debora1234",
+      "name": "David",
+      "lastname": "Torres",
+      "email": "davidtorres@gmail.com",
+      "password": "david1234",
       "role": "USER",
-      "id": "J_Hn-QnriAI"
-    },
-    {
-      "name": "Ana Sofia ",
-      "lastname": "Quintero Vasquez",
-      "email": "sofia@gmail.com",
-      "password": "sofia1234",
-      "role": "USER",
-      "id": "EPFDLH9sjTE"
-    },
-    {
-      "name": "Luis manuel",
-      "lastname": "Orozco",
-      "email": "luis@gmail.com",
-      "password": "luis1234",
-      "role": "ADMIN",
-      "id": "nQF3kuFwUm8"
+      "id": "aW_WQspU8cA"
     }
   ],
   "tasks": [
     {
       "title": "entrenar",
-      "description": "20 flexiones\n5 dominadas\n20 abdominales\n3 series\n",
+      "description": "20 flexiones\n5 dominadas\n20 abdominales\nhacerlo 3 veces\n",
       "status": "in-progress",
       "deadline": "",
       "userId": "fDqgBhaTJ1Y",
       "id": "K7nP837GwaU"
     },
     {
-      "title": "trotar",
-      "description": "levantarme a las 5AM y trotar 5km",
-      "status": "pending",
-      "deadline": "",
-      "userId": "J_Hn-QnriAI",
-      "id": "hl5D9PZ95Eo"
+      "title": "terminar proyecto",
+      "description": "falta documentacion y validaciones",
+      "status": "in-progress",
+      "deadline": "2026-06-05",
+      "userId": "fDqgBhaTJ1Y",
+      "id": "JDwgf9mHcaM"
     },
     {
-      "title": "tarea",
-      "description": "nueva descripcion",
+      "title": "pasear al perro",
+      "description": "caminar con mi perro por 15 minutos",
+      "status": "pending",
+      "deadline": "2026-06-04",
+      "userId": null,
+      "id": "YOt46i-HUgE"
+    },
+    {
+      "title": "organizar mi horario",
+      "description": "",
       "status": "pending",
       "deadline": "",
-      "userId": "EPFDLH9sjTE",
-      "id": "rlmfszObGVE"
+      "userId": "aW_WQspU8cA",
+      "id": "1jIP3T5-kqM"
+    },
+    {
+      "title": "acostarme a las 11PM",
+      "description": "descripcion actualizada",
+      "status": "pending",
+      "deadline": "2026-06-04",
+      "userId": null,
+      "id": "DlJiim7kBbg"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

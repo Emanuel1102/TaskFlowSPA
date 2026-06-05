@@ -10,7 +10,7 @@ export const profile = () => {
     return `
         <header class="border-b border-blue-100 bg-white/90 backdrop-blur">
             <div class="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
-                <a class="text-xl font-black text-blue-900" href="/src/views/home.html">TaskFlowSPA</a>
+                <a class="navigation text-xl font-black text-blue-900" href="/dashboard">TaskFlowSPA</a>
                 <nav class="hidden gap-3 md:flex">
                     <a class="navigation rounded-full px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-blue-50 hover:text-blue-700" href="/dashboard">Dashboard</a>
                     <a class="navigation rounded-full px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-blue-50 hover:text-blue-700" href="/tasks">Tareas</a>
@@ -92,27 +92,34 @@ export const listenersProfile = () => {
     })
     profileForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-        // todo: verify if the email exists before update, in this case display a message error
+
         const updatedUser = {
-            name: profileForm.name.value,
-            lastname: profileForm.lastname.value,
-            email: profileForm.email.value,
-            password: profileForm.password.value,
+            name: profileForm.name.value.trim(),
+            lastname: profileForm.lastname.value.trim(),
+            email: profileForm.email.value.trim(),
+            password: profileForm.password.value.trim(),
         }
-        
-        await updateUser(userData.id, updatedUser)
 
-        const updatedSession = await verifyUser(updatedUser.email)
-        
-        saveSession(updatedSession)        
+        const userExists = await verifyUser(updatedUser.email)
 
-        router(location.pathname)
+        if ((userData.email !== updatedUser.email) && userExists) {
+            alert(`${updatedUser.email} ya está en uso, prueba con otro`)
+        }else{
+            await updateUser(userData.id, updatedUser)
+    
+            const updatedSession = await verifyUser(updatedUser.email)
+            
+            saveSession(updatedSession)        
+    
+            router(location.pathname)
+    
+            alert('Actualizado con éxito')
+        }
     })
 
     const deleteAccountButton = document.getElementById('delete-account')
     deleteAccountButton.addEventListener('click', async () => {
         const confirmDelete = confirm('¿Estás seguro de que deseas eliminar tu cuenta? Esta acción no se puede deshacer.')
-        // todo: when the user attempts back whitout a session, redirect to login page
         if (confirmDelete) {
             await deleteUser(userData.id)
             removeSession()
