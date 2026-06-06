@@ -9,7 +9,7 @@ import { admin, listenersAdmin } from "../views/user/admin";
 import { listenersProfile, profile } from "../views/user/profile";
 
 export const routes = {
-    // auth routes
+    // authentication routes are publics to allow access to the user
     "/": {
         template: home,
         isPublic: true
@@ -25,7 +25,7 @@ export const routes = {
         isPublic: true
     },
 
-    // user routes
+    // user routes are not publics, in this case, the user must be authenticated to access
     "/dashboard": {
         template: dashboard,
         actions: listenersDashboard,
@@ -38,6 +38,7 @@ export const routes = {
         template: tasks,
         actions: listenersTasks
     },
+    // only an admin cans access to this view
     "/admin": {
         template: admin,
         actions: listenersAdmin,

@@ -3,6 +3,7 @@ import { deleteTask, getTasks, updateTask } from "../../services/tasks.service"
 import { router } from "../../router/router";
 
 export const tasks = () => {
+    // we get the current user data from session to render admin link in navbar if role is admin
     const currentUser = getSession()
 
     return `
@@ -76,14 +77,18 @@ export const tasks = () => {
 }
 
 export const listenersTasks = async () => {
+
+    // we get the current user data from session to fetch only their tasks
     const currentUser = getSession()
 
     const tasks = await getTasks(currentUser.id)
 
+    // we reverse the tasks array to show the most recent tasks first
     const tasksList = document.getElementById('task-list')
 
     for (const task of tasks.reverse()) {
 
+        // we destructure the task object to get the properties we need to render each task card
         const {status, title, description, id} = task
 
         tasksList.innerHTML += `
@@ -107,22 +112,27 @@ export const listenersTasks = async () => {
         `   
     }
 
+    // we add event listeners to the edit buttons to open the edit modal and populate the form with the task data
     const editButtons = document.querySelectorAll('.edit-task-btn')    
 
     const modal = document.getElementById('edit-task-modal')
 
     const editTaskForm = document.getElementById('edit-task-form')
 
+    // when the inputs has a name attribute, we can access them directly from the form element using the name as a property, so we don't need to use getElementById for each input
     const title = editTaskForm.title
     const description = editTaskForm.description
     const status = editTaskForm.status
     const deadline = editTaskForm.deadline    
+
+    // we declare a variable to store the current task being edited, so we can use it later when we submit the form to know which task to update
     let currentTask
 
     editButtons.forEach(btn => {
         btn.addEventListener('click', ({target}) => {
             modal.showModal()
 
+            // we find the task that matches the id of the clicked edit button to populate the form with its data
             currentTask = tasks.find(task => task.id == target.dataset.id)
 
             title.value = currentTask.title
@@ -133,6 +143,7 @@ export const listenersTasks = async () => {
     })
 
 
+    // when we submit the edit form, we prevent the default behavior, create an updated task object with the new values from the form, call the updateTask service to update the task in the backend, reset the form, close the modal and re-render the tasks list to show the updated task
     editTaskForm.addEventListener('submit', async (e) => {
         e.preventDefault()
         const updatedTask = {
@@ -148,11 +159,10 @@ export const listenersTasks = async () => {
 
         modal.close()
 
-        router(location.pathname)
-
-        
+        router(location.pathname)        
     })
 
+    // we add event listeners to the cancel buttons to reset the form and close the modal when clicked, and also we add a keyup event listener to the document to listen for the Escape key to reset the form and close the modal when pressed
     const cancelUpdateButtons = document.querySelectorAll('.edit-task-cancel')
 
     cancelUpdateButtons.forEach(btn => {
@@ -165,7 +175,7 @@ export const listenersTasks = async () => {
       e.key == 'Escape' && editTaskForm.reset()
     })
 
-
+    // we add event listeners to the delete buttons to show a confirmation dialog when clicked, if the user confirms we call the deleteTask service to delete the task from the backend and re-render the tasks list to remove the deleted task
     const deleteTaskButtons = document.querySelectorAll('.delete-task-btn')
     
     deleteTaskButtons.forEach(btn => {

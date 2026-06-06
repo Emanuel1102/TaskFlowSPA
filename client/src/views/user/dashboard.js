@@ -2,6 +2,7 @@ import { getSession, removeSession } from "../../services/auth.services";
 import { getTasks } from "../../services/tasks.service";
 
 export const dashboard = () => {
+    // we get the current user from the session to conditionally render the admin link in the navigation if the user is an admin
     const currentUser = getSession()
     return `
         <header class="border-b border-blue-100 bg-white/90 backdrop-blur">
@@ -62,15 +63,18 @@ export const dashboard = () => {
 }
 
 export const listenersDashboard = async ()=> {
+    // we get the welcome message element and set its text content to a personalized greeting using the user's name from the session 
     const welcomeMessage = document.getElementById('welcome-message');
     const user = getSession()
     welcomeMessage.textContent = `¡Que bien tenerte de vuelta, ${user.name}!`;
 
+    // we add an event listener to the logout link to call the removeSession function when clicked, this will clear the user's session and effectively log them out of the application
     const logoutLink = document.getElementById('logout-link')
     logoutLink.addEventListener('click', () => {
         removeSession()
     })
 
+    // we fetch the user's tasks from the backend using the getTasks service, then we calculate the number of tasks in each status (pending, in-progress and completed) using the reduce method and update the corresponding elements in the UI to show these counts
     const tasks = await getTasks(user.id)
 
     const pendingTasks = document.getElementById('pending-tasks')

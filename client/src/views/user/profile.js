@@ -2,9 +2,13 @@ import { handleLocation, router } from "../../router/router";
 import { getSession, removeSession, saveSession } from "../../services/auth.services";
 import { deleteUser, updateUser, verifyUser } from "../../services/users.service";
 
+// this file contains the code for the profile view, where the user can see and edit their personal information, also they can delete their account
 export const profile = () => {
+
+    // we get the current user from the session to pre-fill the form with their current information and allow them to edit it
     const user = getSession()
 
+    // we destructure the user object to get the properties
     const {name, lastname, email, password} = user
 
     return `
@@ -78,18 +82,11 @@ export const profile = () => {
 
 export const listenersProfile = () => {
 
+    // we get the current user from the session to compare the email before updating, if the user is trying to update their email to one that already exists in the system (and it's not their current email), we show an alert and prevent the update, this is to ensure that each email in the system is unique and avoid conflicts between users
     const userData = getSession()
 
     const profileForm = document.getElementById('profile-form');
 
-    profileForm['show-password'].addEventListener('change', (e) => {
-        const passwordInput = profileForm.password;
-        if(e.target.checked) {
-            passwordInput.type = 'text';
-        } else {
-            passwordInput.type = 'password';
-        }
-    })
     profileForm.addEventListener('submit', async (e) => {
         e.preventDefault();
 
@@ -117,6 +114,18 @@ export const listenersProfile = () => {
         }
     })
 
+    // we add an event listener to the show password checkbox to toggle the password input type between text and password, this allows the user to see the password
+    profileForm['show-password'].addEventListener('change', (e) => {
+        const passwordInput = profileForm.password;
+        if(e.target.checked) {
+            passwordInput.type = 'text';
+        } else {
+            passwordInput.type = 'password';
+        }
+    })
+
+
+    // we add an event listener to the delete account button to show a confirmation dialog before deleting the user's account, if the user confirms, we call the deleteUser service to remove their account from the backend, then we clear their session and redirect them to the home page, if they cancel, we show an alert that the deletion was cancelled
     const deleteAccountButton = document.getElementById('delete-account')
     deleteAccountButton.addEventListener('click', async () => {
         const confirmDelete = confirm('¿Estás seguro de que deseas eliminar tu cuenta? Esta acción no se puede deshacer.')

@@ -1,5 +1,6 @@
 export const userEndpoint =  'http://localhost:3000/users'
 
+// this function allows create a new user
 export const createUser = async (user) =>{
     await fetch(userEndpoint, {
         method: 'POST',
@@ -10,6 +11,7 @@ export const createUser = async (user) =>{
     })
 }
 
+// with this function we can verify if an user exists, by email and password, or only by email
 export const verifyUser = async (email, password=null) => {
     const url = password ? `${userEndpoint}?email=${email}&password=${password}` : `${userEndpoint}?email=${email}`    
     try {
@@ -34,6 +36,7 @@ export const verifyUser = async (email, password=null) => {
     }
 }
 
+// this function allows update an user
 export const updateUser = async (id, user) => {
     await fetch(`${userEndpoint}/${id}`, {
         method: 'PATCH',
@@ -44,6 +47,7 @@ export const updateUser = async (id, user) => {
     })
 }
 
+// this function allows delete an user
 export const deleteUser = async (id) => {
     await fetch(`${userEndpoint}/${id}`, {
         method: 'DELETE'

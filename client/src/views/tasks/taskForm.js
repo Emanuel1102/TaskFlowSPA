@@ -69,6 +69,8 @@ export const taskForm = () => {
 }
 
 export const taskFormListeners = () => {
+
+    // we get the task form and add an event listener to handle the form submission, we create a new task object with the form data and we call the createTask service to save the task, then we reset the form and we ask the user if he wants to go to the tasks view
     const form = document.getElementById('task-form') 
 
     const currentUser = getSession()
@@ -89,6 +91,7 @@ export const taskFormListeners = () => {
 
         const viewTasks = confirm('¿Ir a las tareas?')
 
+        // only if the user confirms, we redirect to the tasks view
         viewTasks && router('/tasks')
     })
 }

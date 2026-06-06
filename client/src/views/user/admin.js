@@ -3,6 +3,7 @@ import { getSession } from "../../services/auth.services"
 import { deleteTask, updateTask } from "../../services/tasks.service"
 import { deleteUser, updateUser } from "../../services/users.service"
 
+// This view is only accessible for users with the ADMIN role, here they can see all the tasks and users in the system, and they can edit or delete any task or user, also they can change the role of any user
 export const admin = () => {
     return `
         <header class="border-b border-blue-100 bg-white/90 backdrop-blur">
@@ -149,13 +150,17 @@ export const admin = () => {
     `
 }
 
+// the renderTasks and renderUsers functions are responsible for rendering the tasks and users in the admin view, they receive an array of tasks or users and create the corresponding HTML to display them in the page, also they add data attributes to the edit and delete buttons to store the task or user data that will be used later when we want to edit or delete a task or user
 const renderTasks = (tasks) => {
     const tasksList = document.getElementById('all-tasks')
+
+    // we clear the tasks list before rendering the updated tasks, to avoid duplicates when we re-render after an update or delete action
     tasksList.innerHTML = ''
 
     
     for (const task of tasks) {     
         
+        // we destructure the task object to get the properties we need to display, and also we get the creator's email if the user exists, if the user was deleted we show 'usuario eliminado' as the creator
         const {id, status, title, description, user} = task
 
         const creator = user ? user.email : 'usuario eliminado'
@@ -191,6 +196,7 @@ const renderUsers = (users) => {
 
     const usersList = document.getElementById('all-users')
 
+    // this function is similar to renderTasks but with some differences, here we also check if the user in the iteration is the same as the current logged in user, if it is we skip rendering that user to avoid showing the edit and delete buttons for the current user, since we don't want the admin to be able to edit or delete their own account from this panel, they can only do it from their profile page
     usersList.innerHTML = ''
     
     const currentUser = getSession()
@@ -203,6 +209,7 @@ const renderUsers = (users) => {
 
         const {name, email, role} = user
 
+        // we add the object user as a data attribute in the edit and delete buttons, so when we click on them we can access all the user data to populate the edit form or to show the confirmation dialog with the user's name when we want to delete it
         usersList.innerHTML += `
             <div class="rounded-2xl bg-blue-50 p-4">
                 <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
@@ -225,8 +232,10 @@ const renderUsers = (users) => {
     }
 }
 
+
 export const listenersAdmin = async () => {
 
+    // when the admin view is loaded, we call the getAllTasks and getUsers services to fetch the tasks and users data from the backend, then we call the renderTasks and renderUsers functions to display them in the page
     const tasks = await getAllTasks()
 
     renderTasks(tasks)
@@ -235,14 +244,14 @@ export const listenersAdmin = async () => {
 
     renderUsers(users)
 
-
-    
+    // we get the admin task modal, the admin user modal, the task form and the user form elements from the DOM to add event listeners to them later for the edit actions
     const tasksModal = document.getElementById('admin-task-modal')
     
     const taskFormAdmin = document.getElementById('task-form-admin')    
     
     const tasksList = document.getElementById('all-tasks')
 
+    // we add a click event to the tasks list container, when detect when the click origin is a button to edit or delete, to that we can access to them even if they are rendered dynamically after an update or delete action, then we get the task data from the data attribute of the clicked button to populate the edit form
     tasksList.addEventListener('click', async ({target})=> {
         const btnEdit = target.closest('.edit-task-btn')
         if (btnEdit) {
@@ -259,6 +268,7 @@ export const listenersAdmin = async () => {
             taskFormAdmin.dataset.taskId = task.id   
         }
 
+        // when the click origin is a delete button, we show a confirmation dialog, if the user confirms we call the deleteTask service to delete the task from the backend, then we fetch the updated tasks list and re-render it to reflect the changes in the UI
         const btnDelete = target.closest('.delete-task-btn')
         if (btnDelete) {
             const confirmDelete = confirm('¿seguro que quieres eliminar esta tarea?')
@@ -273,9 +283,9 @@ export const listenersAdmin = async () => {
                 renderTasks(updatedTasks)
             }
         }
-
     })
 
+    // when we submit the edit task form, we prevent the default behavior, we create an updated task object with the new values from the form, then we call the updateTask service to update the task in the backend, after that we reset the form, close the modal and fetch the updated tasks list to re-render it and show the updated task in the UI
     taskFormAdmin.addEventListener('submit', async (e) => {
         e.preventDefault()
 
@@ -300,6 +310,7 @@ export const listenersAdmin = async () => {
     })
 
 
+    // we add event listeners to the cancel buttons in both modals to reset the forms and close the modals when clicked
     const cancelEditButtons = document.querySelectorAll('.cancel-edition-btn')
 
     cancelEditButtons.forEach(btn => {
@@ -311,8 +322,8 @@ export const listenersAdmin = async () => {
 
         })
     })        
-    
 
+    // this code block is similar to the previous one but for the users list
     const usersList = document.getElementById('all-users')
 
     const modalUsers = document.getElementById('admin-users-modal')
@@ -387,16 +398,13 @@ export const listenersAdmin = async () => {
         userFormAdmin.removeAttribute('data-user-id')
 
         renderUsers(updatedUsers)
-        
-    })
+    })  
 
-
-
+    // also we add a keyup event listener to the document to listen for the Escape key to reset the forms and close the modals when pressed, this way we ensure that if the user decides to cancel the edit action, we clear any data from the form and close the modal properly
     document.addEventListener('keyup', (e) => {
        if (e.key == 'Escape') {
             taskFormAdmin.reset() || userFormAdmin.reset()
             taskFormAdmin.removeAttribute('data-task-id') || userFormAdmin.removeAttribute('data-user-id') 
        }  
     })
-    
 }

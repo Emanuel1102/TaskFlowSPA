@@ -13,6 +13,7 @@ export const notFound = () => {
     `
 }
 
+// in this function we add the event listener to the back button to go back to the previous page
 export const listenersNotFound = () => {
     const back = document.getElementById('btn-back')
     back.addEventListener('click', () => {

@@ -1,5 +1,6 @@
 import { router } from "../router/router";
 
+// main view of the project, with links to all the other views, and a header with navigation links to login and register
 export function home () {
     return `
         <header class="border-b border-blue-100 bg-white/90 backdrop-blur">

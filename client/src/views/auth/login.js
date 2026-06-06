@@ -54,15 +54,18 @@ export const login = () => {
 }
 
 export const listenersLogin = () => {
+    // we get the login form and fields
     const loginForm = document.getElementById('login-form');
     const email = loginForm.email
     const password = loginForm.password
     
+    // when the user submit the form, we verify if the user exists and if the password is correct
     loginForm.addEventListener('submit', async (e)  => {
         e.preventDefault();        
-
+        
         const userExists = await verifyUser(email.value, password.value)
         
+        // if the user exists, we save the session and redirect to the dashboard, if not we show an alert
         if (userExists) {
             saveSession(userExists)
             router('/dashboard')
@@ -72,6 +75,7 @@ export const listenersLogin = () => {
         }
     })
 
+    // we get the show password checkbox and add an event listener to show or hide the password
     const showPassword = loginForm['show-password'];
 
     showPassword.addEventListener('change', () => {

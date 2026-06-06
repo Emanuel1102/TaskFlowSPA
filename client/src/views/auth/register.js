@@ -82,6 +82,7 @@ export const register = () => {
 
 export const listenersRegister = () => {
 
+    // we get the register form and add an event listener to handle the form submission, we create a new user object with the form data and we verify if the user already exists, if it does we show an alert, if not we create the user and redirect to the login page
     const registerForm = document.getElementById('register-form')
 
     registerForm.addEventListener('submit', async (e) => {
@@ -107,6 +108,7 @@ export const listenersRegister = () => {
 
     })
 
+    // we get the show password checkbox and add an event listener to show or hide the password
     const showPassword = registerForm['show-password'];
 
     showPassword.addEventListener('change', () => {
